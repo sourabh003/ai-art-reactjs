@@ -1,0 +1,21 @@
+.home-page {
+	padding: 10vh 30vh 0 30vh;
+	.search-box {
+		.search-input {
+			margin: 10px 10px 0 0;
+		}
+	}
+	.images-list {
+		margin: 20px 0;
+		height: 80vh;
+		display: flex;
+		background-color: white;
+		padding: 10px;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+	// .btn-back-to-top{
+	//     position: absolute;
+	//     bottom: 0;
+	//     right: 0;
+	// }
+}
