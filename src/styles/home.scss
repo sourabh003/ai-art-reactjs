@@ -1,21 +1,112 @@
 .home-page {
-	padding: 10vh 30vh 0 30vh;
-	.search-box {
-		.search-input {
-			margin: 10px 10px 0 0;
-		}
+	padding: 10vh 30vh;
+	width: 100% !important;
+	.search-input {
+		width: 50%;
 	}
 	.images-list {
 		margin: 20px 0;
-		height: 80vh;
 		display: flex;
 		background-color: white;
-		padding: 10px;
-		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		padding-top: 10px;
+		.images-grid {
+			display: grid;
+			grid-template-columns: auto auto auto;
+			grid-gap: 10px;
+			.single-img {
+				width: 100%;
+			}
+		}
+		.no-images-view {
+			display: grid;
+			place-items: center;
+			width: 100%;
+			img {
+				width: 100px;
+			}
+		}
 	}
-	// .btn-back-to-top{
-	//     position: absolute;
-	//     bottom: 0;
-	//     right: 0;
-	// }
+}
+@media only screen and (max-width: 1024px) {
+	.home-page {
+		padding: 5vh !important;
+		.images-list {
+			.images-grid {
+				display: grid;
+				grid-template-columns: auto auto auto;
+				grid-gap: 10px;
+				.single-img {
+					width: 100%;
+				}
+			}
+			.no-images-view {
+				display: grid;
+				place-items: center;
+				width: 100%;
+				img {
+					width: 100px;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.home-page {
+		padding: 2vh !important;
+		.images-list {
+			margin: 20px 0;
+			display: flex;
+			background-color: white;
+			padding-top: 10px;
+			.images-grid {
+				display: grid;
+				grid-template-columns: auto auto;
+				grid-gap: 10px;
+				.single-img {
+					width: 100%;
+				}
+			}
+			.no-images-view {
+				display: grid;
+				place-items: center;
+				width: 100%;
+				img {
+					width: 100px;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 480px) {
+	.home-page {
+		width: 100% !important;
+		padding: 2vh !important;
+		.search-input {
+			width: 100%;
+		}
+		.images-list {
+			margin: 20px 0;
+			display: flex;
+			background-color: white;
+			padding-top: 10px;
+            .images-grid {
+				display: grid;
+				grid-template-columns: auto;
+				grid-gap: 10px;
+				.single-img {
+					width: 100%;
+				}
+			}
+			.no-images-view {
+				display: grid;
+				place-items: center;
+				width: 100%;
+				img {
+					width: 100px;
+				}
+			}
+		}
+	}
 }

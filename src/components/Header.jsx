@@ -12,7 +12,7 @@ export default function Header() {
 	};
 
 	return (
-		<header className="custom-header">
+		<Box className="custom-header">
 			<Box className="header-logo">
 				<Link to="/">
 					<img className="logo" src="/images/logo.png" alt="Logo" />
@@ -22,6 +22,6 @@ export default function Header() {
 			<Button colorScheme="purple" onClick={handleClick}>
 				{location.pathname === "/" ? "Create" : "Explore"}
 			</Button>
-		</header>
+		</Box>
 	);
 }
