@@ -25,18 +25,7 @@ export default function Create() {
 		prompt: "",
 	});
 	const [isLoading, setIsLoading] = useState(false);
-	const [generatedImage, setGeneratedImage] = useState({
-		uniqueId: "1676652636290",
-		url: "http://res.cloudinary.com/du1mbqli6/image/upload/h_512,w_512/1676652636290",
-		prompt: "Synthwave aeroplane",
-		uploadedBy: {
-			name: "Sourabh Choudhary",
-			email: "csourabh003@gmail.com",
-		},
-		isPrivate: false,
-		_id: "63efb05fd4a08d3d4c1add4e",
-		__v: 0,
-	});
+	const [generatedImage, setGeneratedImage] = useState(null);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
