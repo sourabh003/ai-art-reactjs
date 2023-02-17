@@ -14,6 +14,7 @@ import { getRandomPrompt } from "../utils/methods";
 import { generateValidator } from "../validators/imageValidators";
 import imageService from "../services/image.service";
 import { Switch } from "@chakra-ui/react";
+import { Badge } from "@chakra-ui/react";
 
 export default function Create() {
 	const toast = useToast();
@@ -24,7 +25,18 @@ export default function Create() {
 		prompt: "",
 	});
 	const [isLoading, setIsLoading] = useState(false);
-	const [generatedImage, setGeneratedImage] = useState(null);
+	const [generatedImage, setGeneratedImage] = useState({
+		uniqueId: "1676652636290",
+		url: "http://res.cloudinary.com/du1mbqli6/image/upload/h_512,w_512/1676652636290",
+		prompt: "Synthwave aeroplane",
+		uploadedBy: {
+			name: "Sourabh Choudhary",
+			email: "csourabh003@gmail.com",
+		},
+		isPrivate: false,
+		_id: "63efb05fd4a08d3d4c1add4e",
+		__v: 0,
+	});
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -86,6 +98,10 @@ export default function Create() {
 				and visually stunning image.
 			</Text>
 
+			<Text className="beta-info" fontSize="md" color="gray">
+				We are currently on beta version, so you only have 5 requests per day.
+			</Text>
+
 			<VStack align="stretch" className="form" w={"100%"}>
 				<Box className="input-group" mb="10px">
 					<Text fontSize="md" color="gray">
@@ -133,7 +149,7 @@ export default function Create() {
 							type="button"
 							onClick={handleSurpriseClick}
 						>
-							Surprise me!
+							Get a random thought
 						</Button>
 					</Box>
 				</Box>
@@ -206,7 +222,11 @@ const RenderImage = ({ isLoading = false, image = null }) => {
 			</Box>
 			{image && (
 				<Box className="image-actions">
-					<Button leftIcon={<DownloadIcon />} colorScheme="teal">
+					<Button
+						className="download-btn"
+						leftIcon={<DownloadIcon />}
+						colorScheme="teal"
+					>
 						<a href="/images/dummy-image.jpg" download>
 							Download
 						</a>
