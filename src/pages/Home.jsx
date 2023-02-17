@@ -22,6 +22,7 @@ export default function Home() {
 	const [searchText, setSearchText] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [images, setImages] = useState([]);
+
 	const imagesList = useMemo(() => {
 		if (searchText === "") return [...images];
 		return images.filter(({ prompt }) => prompt.includes(searchText));
@@ -32,34 +33,38 @@ export default function Home() {
 		setSearchText(value);
 	};
 
-	useEffect(async () => {
-		setIsLoading(true);
+	useEffect(() => {
+		(async () => {
+			setIsLoading(true);
 
-		try {
-			const images = await imageService.getAllImages();
-			console.log({ images });
-			const { data = [], message = "", success = true } = images;
-			const list = data.reverse();
+			try {
+				const images = await imageService.getAllImages();
+				console.log({ images });
+				const { data = [], message = "", success = true } = images;
+				const list = data.reverse();
 
-			if (!success) {
+				if (!success) {
+					toast({
+						title: message,
+						status: "error",
+						duration: 2000,
+						isClosable: true,
+					});
+				}
+				setImages([...list]);
+			} catch (error) {
 				toast({
-					title: message,
+					title: error?.message || error,
 					status: "error",
 					duration: 2000,
 					isClosable: true,
 				});
+			} finally {
+				setIsLoading(false);
 			}
-			setImages([...list]);
-		} catch (error) {
-			toast({
-				title: error?.message || error,
-				status: "error",
-				duration: 2000,
-				isClosable: true,
-			});
-		} finally {
-			setIsLoading(false);
-		}
+		})();
+
+		return () => {};
 	}, []);
 
 	return (
@@ -121,7 +126,7 @@ const RenderImages = ({ isLoading = false, images = [] }) => {
 		<Box className="images-grid">
 			{images.map((image) => {
 				return (
-					<Box className="single-img">
+					<Box key={image?._id} className="single-img">
 						<PostCard {...image} />
 					</Box>
 				);

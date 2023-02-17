@@ -1,5 +1,13 @@
 import { DownloadIcon, SettingsIcon } from "@chakra-ui/icons";
-import { Box, Button, Input, Text, CircularProgress, useToast, HStack, VStack } from "@chakra-ui/react";
+import {
+	Box,
+	Button,
+	Input,
+	Text,
+	CircularProgress,
+	useToast,
+	VStack,
+} from "@chakra-ui/react";
 import { useState } from "react";
 import "../styles/create.scss";
 import { getRandomPrompt } from "../utils/methods";
@@ -68,8 +76,6 @@ export default function Create() {
 		setFormValues((prevState) => ({ ...prevState, prompt: randomThought }));
 	};
 
-	const handleShareClick = () => {};
-
 	return (
 		<Box className="create-page">
 			<Text className="heading" fontSize="xl" as="b">
@@ -123,7 +129,7 @@ export default function Create() {
 						<Button
 							isDisabled={isLoading}
 							colorScheme="purple"
-                            className="surprise-btn"
+							className="surprise-btn"
 							type="button"
 							onClick={handleSurpriseClick}
 						>
