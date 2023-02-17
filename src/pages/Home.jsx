@@ -32,43 +32,34 @@ export default function Home() {
 		setSearchText(value);
 	};
 
-	const handleSearch = () => {
-		if (searchText === "")
-			return toast({
-				title: "Fields Empty!",
+	useEffect(async () => {
+		setIsLoading(true);
+
+		try {
+			const images = await imageService.getAllImages();
+			console.log({ images });
+			const { data = [], message = "", success = true } = images;
+			const list = data.reverse();
+
+			if (!success) {
+				toast({
+					title: message,
+					status: "error",
+					duration: 2000,
+					isClosable: true,
+				});
+			}
+			setImages([...list]);
+		} catch (error) {
+			toast({
+				title: error?.message || error,
 				status: "error",
 				duration: 2000,
 				isClosable: true,
 			});
-		setIsLoading(true);
-		setTimeout(() => {
+		} finally {
 			setIsLoading(false);
-		}, 4000);
-	};
-
-	useEffect(() => {
-		imageService
-			.getAllImages()
-			.then((res) => {
-				const { data = [], message = "", success = true } = res;
-				if (!success) {
-					return toast({
-						title: message,
-						status: "error",
-						duration: 2000,
-						isClosable: true,
-					});
-				}
-				setImages([...data]);
-			})
-			.catch((err) => [
-				toast({
-					title: err.message,
-					status: "error",
-					duration: 2000,
-					isClosable: true,
-				}),
-			]);
+		}
 	}, []);
 
 	return (

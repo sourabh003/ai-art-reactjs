@@ -13,8 +13,8 @@ export const apiReq = (method, url, data) => {
 			.then((res) => {
 				return resolve(res.data);
 			})
-			.catch((err) => {
-				return reject(err.response.data || err.message);
+            .catch((err) => {
+				return reject(err?.response?.data || err?.message);
 			});
 	});
 };
