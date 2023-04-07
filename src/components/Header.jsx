@@ -1,14 +1,41 @@
-import React from "react";
 import "../styles/header.scss";
-import { Box, Button, Text } from "@chakra-ui/react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+	Avatar,
+	Box,
+	Button,
+	Menu,
+	MenuButton,
+	MenuItem,
+	MenuList,
+	Text,
+} from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import types from "../redux/types";
+import { setData } from "../utils/commonMethods";
+import { USER } from "../utils/constants";
+import { dialogTypes } from "./Dialog";
+import { useEffect } from "react";
 
 export default function Header() {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const location = useLocation();
+	const { user = null } = useSelector((state) => state);
 
-	const handleClick = () => {
-		navigate(location.pathname === "/" ? "/create" : "/");
+	const handleLoginClick = () => {
+		dispatch({
+			type: types.showDialog,
+			payload: dialogTypes.login,
+		});
+	};
+
+	const handleProfileClick = () => {};
+
+	const handleLogoutClick = () => {
+		dispatch({
+			type: types.logout,
+		});
+		navigate("/");
 	};
 
 	return (
@@ -19,9 +46,29 @@ export default function Header() {
 					<Text fontSize="3xl">AI Image Generation</Text>
 				</Link>
 			</Box>
-			<Button colorScheme="purple" onClick={handleClick}>
-				{location.pathname === "/" ? "Create" : "Explore"}
-			</Button>
+			<Box className="user-icon">
+				{user ? (
+					<Menu>
+						<MenuButton>
+							<Avatar
+								onClick={handleProfileClick}
+								size="md"
+								name={user?.name}
+								src={user?.photo}
+								bg="purple.500"
+							/>
+						</MenuButton>
+						<MenuList>
+							<MenuItem>Profile</MenuItem>
+							<MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+						</MenuList>
+					</Menu>
+				) : (
+					<Button colorScheme="purple" onClick={handleLoginClick}>
+						Login
+					</Button>
+				)}
+			</Box>
 		</Box>
 	);
 }

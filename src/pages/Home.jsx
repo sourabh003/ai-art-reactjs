@@ -6,7 +6,6 @@ import {
 	Grid,
 	GridItem,
 	CircularProgress,
-	useToast,
 	InputLeftElement,
 	InputGroup,
 } from "@chakra-ui/react";
@@ -17,8 +16,6 @@ import PostCard from "../components/PostCard";
 import { PhoneIcon, Search2Icon } from "@chakra-ui/icons";
 
 export default function Home() {
-	const toast = useToast();
-
 	const [searchText, setSearchText] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [images, setImages] = useState([]);
@@ -39,26 +36,15 @@ export default function Home() {
 
 			try {
 				const images = await imageService.getAllImages();
-				console.log({ images });
 				const { data = [], message = "", success = true } = images;
 				const list = data.reverse();
 
 				if (!success) {
-					toast({
-						title: message,
-						status: "error",
-						duration: 2000,
-						isClosable: true,
-					});
+					toast.error(message);
 				}
 				setImages([...list]);
 			} catch (error) {
-				toast({
-					title: error?.message || error,
-					status: "error",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast.error(error?.message || error);
 			} finally {
 				setIsLoading(false);
 			}

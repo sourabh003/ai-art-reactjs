@@ -5,7 +5,6 @@ import {
 	Input,
 	Text,
 	CircularProgress,
-	useToast,
 	VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
@@ -15,10 +14,9 @@ import { generateValidator } from "../validators/imageValidators";
 import imageService from "../services/image.service";
 import { Switch } from "@chakra-ui/react";
 import { Badge } from "@chakra-ui/react";
+import toast from "react-hot-toast";
 
 export default function Create() {
-	const toast = useToast();
-
 	const [formValues, setFormValues] = useState({
 		name: "",
 		email: "",
@@ -38,34 +36,19 @@ export default function Create() {
 		const values = { ...formValues };
 		const { isValid } = generateValidator(values);
 		if (!isValid) {
-			toast({
-				title: "Fields Empty!",
-				status: "error",
-				duration: 2000,
-				isClosable: true,
-			});
+			toast.error("Fields Empty!");
 			return setIsLoading(false);
 		}
 		imageService
 			.generate({ ...formValues })
 			.then((res) => {
 				const { success, message, data } = res;
-				toast({
-					title: message,
-					status: success ? "success" : "error",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast[success ? "success" : "error"](message);
 				if (!success) return;
 				setGeneratedImage(data);
 			})
 			.catch((error) => {
-				toast({
-					title: error.message,
-					status: "error",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast.error(error.message);
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -163,7 +146,6 @@ export default function Create() {
 
 const RenderImage = ({ isLoading = false, image = null }) => {
 	const [loader, setLoader] = useState(false);
-	const toast = useToast();
 
 	const handleVisibilityChange = (e) => {
 		const { checked } = e.target;
@@ -173,20 +155,10 @@ const RenderImage = ({ isLoading = false, image = null }) => {
 				isPrivate: checked,
 			})
 			.then(() => {
-				toast({
-					title: "Image visibility updated",
-					status: "success",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast.success("Image visibility updated");
 			})
 			.catch((err) => {
-				toast({
-					title: err.message,
-					status: "error",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast.error(err.message);
 			})
 			.finally(() => {
 				setLoader(false);

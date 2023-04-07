@@ -69,4 +69,3 @@ export const removeMultipleData = (data) => {
 export const clearLocalStorage = () => {
 	localStorage.clear();
 };
-
