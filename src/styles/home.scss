@@ -4,78 +4,16 @@
 	.search-input {
 		width: 50%;
 	}
-	.images-list {
-		margin: 20px 0;
-		display: flex;
-		background-color: white;
-		padding-top: 10px;
-		.images-grid {
-			display: grid;
-			grid-template-columns: auto auto auto;
-			grid-gap: 10px;
-			.single-img {
-				width: 100%;
-			}
-		}
-		.no-images-view {
-			display: grid;
-			place-items: center;
-			width: 100%;
-			img {
-				width: 100px;
-			}
-		}
-	}
 }
 @media only screen and (max-width: 1024px) {
 	.home-page {
 		padding: 5vh !important;
-		.images-list {
-			.images-grid {
-				display: grid;
-				grid-template-columns: auto auto auto;
-				grid-gap: 10px;
-				.single-img {
-					width: 100%;
-				}
-			}
-			.no-images-view {
-				display: grid;
-				place-items: center;
-				width: 100%;
-				img {
-					width: 100px;
-				}
-			}
-		}
 	}
 }
 
 @media only screen and (max-width: 768px) {
 	.home-page {
 		padding: 2vh !important;
-		.images-list {
-			margin: 20px 0;
-			display: flex;
-			background-color: white;
-			padding-top: 10px;
-			.images-grid {
-				display: grid;
-				grid-template-columns: auto auto;
-				grid-gap: 10px;
-				.single-img {
-					width: 100%;
-				}
-			}
-			.no-images-view {
-				display: grid;
-				place-items: center;
-				width: 100%;
-				img {
-					width: 100px;
-				}
-			}
-		}
 	}
 }
 
@@ -85,28 +23,6 @@
 		padding: 2vh !important;
 		.search-input {
 			width: 100%;
-		}
-		.images-list {
-			margin: 20px 0;
-			display: flex;
-			background-color: white;
-			padding-top: 10px;
-            .images-grid {
-				display: grid;
-				grid-template-columns: auto;
-				grid-gap: 10px;
-				.single-img {
-					width: 100%;
-				}
-			}
-			.no-images-view {
-				display: grid;
-				place-items: center;
-				width: 100%;
-				img {
-					width: 100px;
-				}
-			}
 		}
 	}
 }

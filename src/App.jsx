@@ -5,9 +5,9 @@ import CustomRoutes from "./Routes";
 import { getData } from "./utils/commonMethods";
 import { USER } from "./utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import types from "./redux/types";
 import Dialog from "./components/Dialog";
 import { Toaster } from "react-hot-toast";
+import { setUser } from "./redux/actions/auth";
 
 const App = () => {
 	const { user = null } = useSelector((state) => state);
@@ -15,7 +15,7 @@ const App = () => {
 
 	useEffect(() => {
 		let user = getData(USER);
-		if (user) dispatch({ type: types.setUser, payload: user });
+		if (user) dispatch(setUser(user));
 	}, []);
 
 	useEffect(() => {

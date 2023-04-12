@@ -1,24 +1,25 @@
 import {
 	Box,
-	Button,
 	Input,
 	Text,
-	Grid,
-	GridItem,
-	CircularProgress,
 	InputLeftElement,
 	InputGroup,
 } from "@chakra-ui/react";
 import { useEffect, useMemo, useState } from "react";
 import "../styles/home.scss";
-import imageService from "../services/image.service";
-import PostCard from "../components/PostCard";
-import { PhoneIcon, Search2Icon } from "@chakra-ui/icons";
+import { Search2Icon } from "@chakra-ui/icons";
+import RenderImagesList from "../components/ImagesList";
+import { useDispatch, useSelector } from "react-redux";
+import { getImages } from "../redux/actions/images";
+import { toast } from "react-hot-toast";
 
 export default function Home() {
+	const dispatch = useDispatch();
 	const [searchText, setSearchText] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
-	const [images, setImages] = useState([]);
+
+	const { images = [], isLoading = true } = useSelector(
+		(state) => state.images
+	);
 
 	const imagesList = useMemo(() => {
 		if (searchText === "") return [...images];
@@ -31,24 +32,13 @@ export default function Home() {
 	};
 
 	useEffect(() => {
-		(async () => {
-			setIsLoading(true);
-
-			try {
-				const images = await imageService.getAllImages();
-				const { data = [], message = "", success = true } = images;
-				const list = data.reverse();
-
-				if (!success) {
-					toast.error(message);
-				}
-				setImages([...list]);
-			} catch (error) {
-				toast.error(error?.message || error);
-			} finally {
-				setIsLoading(false);
-			}
-		})();
+		try {
+			dispatch(getImages());
+			console.log("asdf");
+		} catch (error) {
+			console.log("error");
+			toast.error(error?.message || error);
+		}
 
 		return () => {};
 	}, []);
@@ -73,9 +63,7 @@ export default function Home() {
 				/>
 			</InputGroup>
 
-			<Box className="images-list">
-				<RenderImages isLoading={isLoading} images={imagesList} />
-			</Box>
+			<RenderImagesList isLoading={isLoading} images={imagesList} />
 			{/* <IconButton
 				className="btn-back-to-top"
 				aria-label="Search database"
@@ -85,38 +73,3 @@ export default function Home() {
 		</Box>
 	);
 }
-
-const RenderImages = ({ isLoading = false, images = [] }) => {
-	if (isLoading)
-		return (
-			<Box
-				w={"100%"}
-				display="flex"
-				justifyContent="center"
-				alignItems="center"
-			>
-				<CircularProgress isIndeterminate color="green.300" />
-			</Box>
-		);
-
-	if (images.length === 0)
-		return (
-			<Box className="no-images-view">
-				<img src="/images/no-images.png" alt="no images" />
-				<Text fontSize="md" color="gray" as="b">
-					No Images Found
-				</Text>
-			</Box>
-		);
-	return (
-		<Box className="images-grid">
-			{images.map((image) => {
-				return (
-					<Box key={image?._id} className="single-img">
-						<PostCard {...image} />
-					</Box>
-				);
-			})}
-		</Box>
-	);
-};

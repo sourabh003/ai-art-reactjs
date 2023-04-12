@@ -1,40 +1,38 @@
-import "../styles/header.scss";
+import "./Header.scss";
 import {
 	Avatar,
 	Box,
 	Button,
+	IconButton,
 	Menu,
 	MenuButton,
 	MenuItem,
 	MenuList,
 	Text,
 } from "@chakra-ui/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import types from "../redux/types";
-import { setData } from "../utils/commonMethods";
-import { USER } from "../utils/constants";
-import { dialogTypes } from "./Dialog";
-import { useEffect } from "react";
+import { dialogTypes } from "../Dialog";
+import { toggleModal } from "../../redux/actions/common";
+import { userLogout } from "../../redux/actions/auth";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 
 export default function Header() {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-	const { user = null } = useSelector((state) => state);
+	const location = useLocation();
+	const { user = null } = useSelector((state) => state.auth);
 
 	const handleLoginClick = () => {
-		dispatch({
-			type: types.showDialog,
-			payload: dialogTypes.login,
-		});
+		dispatch(toggleModal({ modal: dialogTypes.login }));
 	};
 
-	const handleProfileClick = () => {};
+	const handleProfileClick = () => {
+		navigate("/profile");
+	};
 
 	const handleLogoutClick = () => {
-		dispatch({
-			type: types.logout,
-		});
+		dispatch(userLogout());
 		navigate("/");
 	};
 
@@ -42,8 +40,18 @@ export default function Header() {
 		<Box className="custom-header">
 			<Box className="header-logo">
 				<Link to="/">
+					{location.pathname !== "/" && (
+						<IconButton
+							icon={<ArrowBackIcon />}
+							onClick={() => navigate(-1)}
+							mr={2}
+                            fontSize='25px'
+							variant="unstyled"
+							color="white"
+						/>
+					)}
 					<img className="logo" src="/images/logo.png" alt="Logo" />
-					<Text fontSize="3xl">AI Image Generation</Text>
+					<Text fontSize="3xl">AI Art</Text>
 				</Link>
 			</Box>
 			<Box className="user-icon">
@@ -52,14 +60,14 @@ export default function Header() {
 						<MenuButton>
 							<Avatar
 								onClick={handleProfileClick}
-								size="md"
+								size={{ base: "sm", sm: "md" }}
 								name={user?.name}
 								src={user?.photo}
 								bg="purple.500"
 							/>
 						</MenuButton>
 						<MenuList>
-							<MenuItem>Profile</MenuItem>
+							<MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
 							<MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
 						</MenuList>
 					</Menu>

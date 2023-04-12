@@ -6,21 +6,22 @@ import {
 import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoginDialog from "./types/LoginDialog";
-import types from "../../redux/types";
+import { toggleModal } from "../../redux/actions/common";
 
 export default function Dialog() {
 	const dispatch = useDispatch();
 	const cancelRef = useRef();
 	const { isOpen, onOpen, onClose: onDialogClose } = useDisclosure();
-	const { dialog = "" } = useSelector((state) => state);
+	const { modal = "" } = useSelector((state) => state.common);
 
 	useEffect(() => {
-		if (dialog !== "") onOpen();
-		if (dialog === "") onClose();
-	}, [dialog]);
+		// console.log({ modal });
+		if (modal !== "") onOpen();
+		if (modal === "") onClose();
+	}, [modal]);
 
 	const onClose = () => {
-		dispatch({ type: types.closeDialog });
+		dispatch(toggleModal());
 		onDialogClose();
 	};
 
@@ -29,14 +30,14 @@ export default function Dialog() {
 			motionPreset="slideInBottom"
 			leastDestructiveRef={cancelRef}
 			onClose={onClose}
-			closeOnOverlayClick={dialog !== dialogTypes.login}
-			closeOnEsc={dialog !== dialogTypes.login}
+			closeOnOverlayClick={modal !== dialogTypes.login}
+			closeOnEsc={modal !== dialogTypes.login}
 			isOpen={isOpen}
 			isCentered
 		>
 			<AlertDialogOverlay />
 			<DialogContent
-				dialog={dialog}
+				dialog={modal}
 				open={onOpen}
 				cancelRef={cancelRef}
 				onClose={onClose}

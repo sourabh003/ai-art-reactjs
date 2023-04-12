@@ -16,6 +16,19 @@
 			align-items: baseline;
 		}
 	}
+    .image-visibility-control {
+        margin-top: 10px;
+        padding: 5px;
+        border-radius: 10px;
+        border: dashed 1px lightgray;
+        .image-control {
+            margin-top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
 	&:hover {
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}

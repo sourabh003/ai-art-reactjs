@@ -11,10 +11,9 @@ import { useState } from "react";
 import "../styles/create.scss";
 import { getRandomPrompt } from "../utils/methods";
 import { generateValidator } from "../validators/imageValidators";
-import imageService from "../services/image.service";
 import { Switch } from "@chakra-ui/react";
-import { Badge } from "@chakra-ui/react";
 import toast from "react-hot-toast";
+import imageService from "../redux/services/image.service";
 
 export default function Create() {
 	const [formValues, setFormValues] = useState({

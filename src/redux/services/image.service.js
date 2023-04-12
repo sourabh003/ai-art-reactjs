@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiPut, generateURL } from "../utils/commonMethods";
+import { apiGet, apiPost, apiPut, generateURL } from "../../utils/commonMethods";
 
 class ImageService {
     generate(data) {
@@ -6,6 +6,9 @@ class ImageService {
     }
 	getAllImages(data) {
 		return apiGet(generateURL("/images"), data);
+    }
+    getUserImages(data) {
+		return apiPost(generateURL("/images/user"), data);
     }
     updateVisibility(data) {
         return apiPut(generateURL("/images"), data);

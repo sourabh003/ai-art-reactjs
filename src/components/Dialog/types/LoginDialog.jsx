@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ArrowForwardIcon } from "@chakra-ui/icons";
 import {
 	AlertDialogBody,
@@ -7,27 +7,17 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	Button,
-	Icon,
 } from "@chakra-ui/react";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 const provider = new GoogleAuthProvider();
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import types from "../../../redux/types";
+import { userLogin } from "../../../redux/actions/auth";
+import { toggleModal } from "../../../redux/actions/common";
 
 export default function LoginDialog({ onClose, cancelRef }) {
 	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useDispatch();
-
-	const userLogin = (user) => {
-		try {
-            dispatch({ type: types.login, payload: user });
-            dispatch({ type: types.closeDialog });
-            toast.success("Logged In!")
-		} catch (error) {
-			toast.error(error.message || error);
-		}
-	};
 
 	const handleLogin = () => {
 		setIsLoading(true);
@@ -41,10 +31,15 @@ export default function LoginDialog({ onClose, cancelRef }) {
 					email: result?.user?.email,
 					photo: result?.user?.photoURL,
 				};
-				userLogin(user);
+				dispatch(userLogin(user))
+					.then(() => {
+						toast.success("Welcome " + user?.name.split(" ")[0]);
+						dispatch(toggleModal());
+					})
+					.catch((err) => toast.error(err?.message || err));
 			})
 			.catch((error) => {
-				toast.error(error.message || error);
+				toast.error(error?.message || error);
 			})
 			.finally(() => setIsLoading(false));
 	};
