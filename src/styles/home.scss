@@ -1,6 +1,28 @@
 .home-page {
 	padding: 10vh 30vh;
 	width: 100% !important;
+	.create-section {
+		background: url("../assets/create.png");
+		background-position: 100%;
+		width: 100% !important;
+		border-radius: 10px;
+		display: grid;
+		place-items: center;
+		padding: 10px;
+		height: 150px;
+		button {
+			border: solid 1px black;
+			color: black;
+			&:hover {
+				background-color: black;
+				color: white;
+			}
+		}
+	}
+	.explore-section {
+		margin-top: 10px;
+		padding: 10px;
+	}
 	.search-input {
 		width: 50%;
 	}
@@ -21,14 +43,23 @@
 	.home-page {
 		width: 100% !important;
 		padding: 2vh !important;
+		.create-section {
+			button {
+				margin-top: 10px;
+				width: 100% !important;
+			}
+		}
 		.search-input {
 			width: 100%;
 		}
 	}
 }
-.dark-mode{
-    .home-page{
-        background-color: #12151C !important;
-        color: white;
-    }
+.dark-mode {
+	.home-page {
+		background-color: #12151c !important;
+		color: white;
+		.create-section {
+			color: black;
+		}
+	}
 }
