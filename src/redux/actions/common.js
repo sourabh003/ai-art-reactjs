@@ -18,3 +18,13 @@ export const toggleTheme = () => {
 		});
 	};
 };
+
+export const SET_THEME = "SET_THEME";
+
+export const setTheme = () => {
+	return (dispatch) => {
+		dispatch({
+			type: SET_THEME,
+		});
+	};
+};

@@ -1,4 +1,6 @@
-import { TOGGLE_MODAL, TOGGLE_THEME } from "../actions/common";
+import { setData } from "../../utils/commonMethods";
+import { THEME } from "../../utils/constants";
+import { SET_THEME, TOGGLE_MODAL, TOGGLE_THEME } from "../actions/common";
 
 const initialState = {
 	appTheme: "dark",
@@ -22,7 +24,12 @@ export default (state = initialState, action) => {
 			return { ...state, ...modalState };
 
 		case TOGGLE_THEME:
-			return { ...state, appTheme: state.appTheme === "light" ? "dark" : "light" };
+			const appTheme = state.appTheme === "light" ? "dark" : "light";
+			setData(THEME, appTheme);
+			return { ...state, appTheme };
+
+		case SET_THEME:
+			return { ...state, appTheme: payload };
 
 		default:
 			return { ...state };

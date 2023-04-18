@@ -3,7 +3,7 @@ import { BrowserRouter } from "react-router-dom";
 import Header from "./components/Header";
 import CustomRoutes from "./Routes";
 import { getData } from "./utils/commonMethods";
-import { USER } from "./utils/constants";
+import { THEME, USER } from "./utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import Dialog from "./components/Dialog";
 import { Toaster } from "react-hot-toast";
@@ -12,9 +12,8 @@ import { Box } from "@chakra-ui/react";
 import Lottie from "react-lottie-player";
 
 const App = () => {
-	const { appTheme = "light" } = useSelector((state) => state.common);
+	const { appTheme } = useSelector((state) => state.common);
 	const dispatch = useDispatch();
-	const ref = useRef();
 	const [animationData, setAnimationData] = useState(null);
 
 	const playAnimation = () => {

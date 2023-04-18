@@ -71,9 +71,10 @@ export default function Header({ playAnimation }) {
 				/>
 				{user ? (
 					location.pathname !== "/profile" ? (
-						<Menu ml={3}>
+						<Menu>
 							<MenuButton>
 								<Avatar
+									ml={3}
 									onClick={handleProfileClick}
 									size={{ base: "sm", sm: "md" }}
 									name={user?.name}
