@@ -14,19 +14,25 @@ import { updateImageVisibility } from "../../redux/actions/images";
 import { toast } from "react-hot-toast";
 import "./postcard.scss";
 
-export default function PostCard(image) {
+export default function PostCard({ allowImageEdit = false, image }) {
 	const dispatch = useDispatch();
-	const { data, prompt, url, uploadedBy = {}, isPrivate = false } = image;
+	const { prompt, url, uploadedBy = {}, isPrivate = false } = image;
 	const { name } = uploadedBy;
 
 	const [checked, setChecked] = useState(isPrivate);
 	const [loading, setLoading] = useState(false);
 
-	const onDownloadClick = () => {
-		let a = document.createElement("a");
-		a.href = "data:image/png;base64," + data;
-		a.download = "image.png";
-		a.click();
+	const onDownloadClick = async () => {
+		const image = await fetch(url);
+		const imageBlog = await image.blob();
+		const imageURL = URL.createObjectURL(imageBlog);
+
+		const link = document.createElement("a");
+		link.href = imageURL;
+		link.download = "ai-generated-art";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
 	};
 
 	const handleVisibilityChange = () => {
@@ -50,10 +56,6 @@ export default function PostCard(image) {
 		setChecked(isPrivate);
 	}, [isPrivate]);
 
-	useEffect(() => {
-		console.log({ image });
-	}, [image]);
-
 	return (
 		<Box className="post-card">
 			<img src={url} alt={prompt} />
@@ -69,25 +71,27 @@ export default function PostCard(image) {
 					</IconButton>
 				</Box>
 
-				<Box className="image-visibility-control">
-					<Text color="gray" textAlign="center">
-						Change Image Visibility
-					</Text>
-					<Box className="image-control">
-						<Text>Public</Text>
-						{loading ? (
-							<CircularProgress mx={5} size="20px" isIndeterminate />
-						) : (
-							<Switch
-								isChecked={checked}
-								mx={5}
-								size="md"
-								onChange={handleVisibilityChange}
-							/>
-						)}
-						<Text>Private</Text>
+				{allowImageEdit && (
+					<Box className="image-visibility-control">
+						<Text color="gray" textAlign="center">
+							Change Image Visibility
+						</Text>
+						<Box className="image-control">
+							<Text>Public</Text>
+							{loading ? (
+								<CircularProgress mx={5} size="20px" isIndeterminate />
+							) : (
+								<Switch
+									isChecked={checked}
+									mx={5}
+									size="md"
+									onChange={handleVisibilityChange}
+								/>
+							)}
+							<Text>Private</Text>
+						</Box>
 					</Box>
-				</Box>
+				)}
 			</Box>
 		</Box>
 	);

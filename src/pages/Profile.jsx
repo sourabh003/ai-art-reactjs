@@ -4,14 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import RenderImagesList from "../components/ImagesList";
 import { useEffect } from "react";
 import { getUserImages } from "../redux/actions/images";
+import { toggleModal } from "../redux/actions/common";
+import { dialogTypes } from "../components/Dialog";
 
 export default function Profile() {
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
 	const { user = null } = useSelector((state) => state.auth);
 	const { isLoading = true, images = [] } = useSelector(
 		(state) => state.images
 	);
+
+	const handleLogout = () => {
+		dispatch(toggleModal({ modal: dialogTypes.logout }));
+	};
 
 	useEffect(() => {
 		if (!user) return;
@@ -33,7 +39,7 @@ export default function Profile() {
 				<Text fontSize="md" color="gray">
 					{user?.email}
 				</Text>
-				<Button mt={2} colorScheme="red" variant="ghost">
+				<Button mt={2} colorScheme="red" variant="ghost" onClick={handleLogout}>
 					Logout
 				</Button>
 			</Box>
@@ -54,7 +60,7 @@ export default function Profile() {
 				</Box>
 			</Box>
 
-			<RenderImagesList isLoading={isLoading} images={images} />
+			<RenderImagesList allowImageEdit isLoading={isLoading} images={images} />
 		</Box>
 	);
 }

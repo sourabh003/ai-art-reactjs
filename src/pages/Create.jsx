@@ -7,15 +7,18 @@ import {
 	CircularProgress,
 	VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/create.scss";
 import { getRandomPrompt } from "../utils/methods";
 import { generateValidator } from "../validators/imageValidators";
 import { Switch } from "@chakra-ui/react";
 import toast from "react-hot-toast";
 import imageService from "../redux/services/image.service";
+import { useSelector } from "react-redux";
 
 export default function Create() {
+	const { user } = useSelector((state) => state.auth);
+
 	const [formValues, setFormValues] = useState({
 		name: "",
 		email: "",
@@ -59,6 +62,15 @@ export default function Create() {
 		setFormValues((prevState) => ({ ...prevState, prompt: randomThought }));
 	};
 
+	useEffect(() => {
+		if (!user) return;
+		setFormValues((prevState) => ({
+			...prevState,
+			name: user?.name,
+			email: user?.email,
+		}));
+	}, [user]);
+
 	return (
 		<Box className="create-page">
 			<Text className="heading" fontSize="xl" as="b">
@@ -79,6 +91,7 @@ export default function Create() {
 						Your Name
 					</Text>
 					<Input
+						disabled={!!user}
 						width={"100%"}
 						className="search-input"
 						onChange={handleChange}
@@ -92,6 +105,7 @@ export default function Create() {
 						Your Email
 					</Text>
 					<Input
+						disabled={!!user}
 						width={"100%"}
 						className="search-input"
 						type="email"

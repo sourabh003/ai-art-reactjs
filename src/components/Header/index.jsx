@@ -45,7 +45,7 @@ export default function Header() {
 							icon={<ArrowBackIcon />}
 							onClick={() => navigate(-1)}
 							mr={2}
-                            fontSize='25px'
+							fontSize="25px"
 							variant="unstyled"
 							color="white"
 						/>
@@ -56,21 +56,27 @@ export default function Header() {
 			</Box>
 			<Box className="user-icon">
 				{user ? (
-					<Menu>
-						<MenuButton>
-							<Avatar
-								onClick={handleProfileClick}
-								size={{ base: "sm", sm: "md" }}
-								name={user?.name}
-								src={user?.photo}
-								bg="purple.500"
-							/>
-						</MenuButton>
-						<MenuList>
-							<MenuItem onClick={() => navigate("/profile")}>Profile</MenuItem>
-							<MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
-						</MenuList>
-					</Menu>
+					location.pathname !== "/profile" ? (
+						<Menu>
+							<MenuButton>
+								<Avatar
+									onClick={handleProfileClick}
+									size={{ base: "sm", sm: "md" }}
+									name={user?.name}
+									src={user?.photo}
+									bg="purple.500"
+								/>
+							</MenuButton>
+							<MenuList>
+								<MenuItem onClick={() => navigate("/profile")}>
+									Profile
+								</MenuItem>
+								<MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+							</MenuList>
+						</Menu>
+					) : (
+						""
+					)
 				) : (
 					<Button colorScheme="purple" onClick={handleLoginClick}>
 						Login

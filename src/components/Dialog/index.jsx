@@ -7,6 +7,7 @@ import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoginDialog from "./types/LoginDialog";
 import { toggleModal } from "../../redux/actions/common";
+import LogoutDialog from "./types/LogoutDialog";
 
 export default function Dialog() {
 	const dispatch = useDispatch();
@@ -51,6 +52,11 @@ const DialogContent = ({ dialog, open, cancelRef, onClose }) => {
 		case dialogTypes.login:
 			return (
 				<LoginDialog cancelRef={cancelRef} open={open} onClose={onClose} />
+			);
+
+		case dialogTypes.logout:
+			return (
+				<LogoutDialog cancelRef={cancelRef} open={open} onClose={onClose} />
 			);
 
 		default:

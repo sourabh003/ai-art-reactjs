@@ -34,7 +34,6 @@ export default function Home() {
 	useEffect(() => {
 		try {
 			dispatch(getImages());
-			console.log("asdf");
 		} catch (error) {
 			console.log("error");
 			toast.error(error?.message || error);
@@ -44,7 +43,10 @@ export default function Home() {
 	}, []);
 
 	return (
-		<Box className="home-page">
+        <Box className="home-page">
+            <Box>
+                
+            </Box>
 			<Text fontSize="xl" as="b">
 				Look what the people are up to.
 			</Text>

@@ -1,14 +1,18 @@
 import { Box, CircularProgress, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import PostCard from "../PostCard";
 import "./ImagesList.scss";
 
-export default function RenderImagesList({ isLoading = false, images = [] }) {
+export default function RenderImagesList({
+	isLoading = false,
+	images = [],
+	allowImageEdit = false,
+}) {
 	if (isLoading)
 		return (
 			<Box
-                w={"100%"}
-                mt={3}
+				w={"100%"}
+				mt={3}
 				display="flex"
 				justifyContent="center"
 				alignItems="center"
@@ -32,7 +36,7 @@ export default function RenderImagesList({ isLoading = false, images = [] }) {
 				{images.map((image) => {
 					return (
 						<Box key={image?._id} className="single-img">
-							<PostCard {...image} />
+							<PostCard allowImageEdit={allowImageEdit} image={image} />
 						</Box>
 					);
 				})}
