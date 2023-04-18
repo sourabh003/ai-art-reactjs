@@ -8,7 +8,7 @@ export const apiReq = (method, url, data) => {
 		axios({
 			method,
 			url,
-			data,
+            data,
 		})
 			.then((res) => {
 				return resolve(res.data);
@@ -20,7 +20,11 @@ export const apiReq = (method, url, data) => {
 };
 
 export const apiGet = (url, data) => {
-	return apiReq("get", url, data);
+    let updatedURL = Object.keys(data).reduce((url, key, index) => {
+        url = `${url}${index === 0 ? "?" : "&"}${key}=${data[key]}`;
+        return url;
+    }, url)
+	return apiReq("get", updatedURL, data);
 };
 
 export const apiPost = (url, data) => {

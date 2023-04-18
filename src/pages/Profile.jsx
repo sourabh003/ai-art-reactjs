@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { getUserImages } from "../redux/actions/images";
 import { toggleModal } from "../redux/actions/common";
 import { dialogTypes } from "../components/Dialog";
+import { getUserMetrics } from "../redux/actions/auth";
 
 export default function Profile() {
 	const dispatch = useDispatch();
@@ -23,6 +24,11 @@ export default function Profile() {
 		if (!user) return;
 		dispatch(getUserImages({ email: user?.email }));
 	}, [user]);
+
+	useEffect(() => {
+		if (!user) return;
+		dispatch(getUserMetrics({ email: user?.email }));
+	}, []);
 
 	return (
 		<Box className="profile-page">

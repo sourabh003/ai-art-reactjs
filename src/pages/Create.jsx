@@ -46,15 +46,10 @@ export default function Create() {
 			.then((res) => {
 				const { success, message, data } = res;
 				toast[success ? "success" : "error"](message);
-				if (!success) return;
-				setGeneratedImage(data);
+				if (success) setGeneratedImage(data);
 			})
-			.catch((error) => {
-				toast.error(error.message);
-			})
-			.finally(() => {
-				setIsLoading(false);
-			});
+			.catch((error) => toast.error(error.message))
+			.finally(() => setIsLoading(false));
 	};
 
 	const handleSurpriseClick = () => {

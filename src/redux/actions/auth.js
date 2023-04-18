@@ -47,3 +47,34 @@ export const userLogout = () => {
 		dispatch({ type: USER_LOGOUT });
 	};
 };
+
+export const GET_USER_METRICS = "GET_USER_METRICS";
+export const GET_USER_METRICS_FAILED = "GET_USER_METRICS_FAILED";
+export const GET_USER_METRICS_SUCCESS = "GET_USER_METRICS_SUCCESS";
+
+export const getUserMetrics = (email) => {
+	return (dispatch) => {
+		dispatch({ type: GET_USER_METRICS });
+		return new Promise((resolve, reject) => {
+			(async () => {
+				try {
+					const userResponse = await authService.getUserMetrics(email);
+					const { data = null, message = "", success = true } = userResponse;
+					if (!success) {
+						throw new Error(message);
+					}
+					dispatch({
+						type: GET_USER_METRICS_SUCCESS,
+						payload: data,
+					});
+					return resolve(data);
+				} catch (error) {
+					dispatch({
+						type: GET_USER_METRICS_FAILED,
+					});
+					return reject(error);
+				}
+			})();
+		});
+	};
+};
