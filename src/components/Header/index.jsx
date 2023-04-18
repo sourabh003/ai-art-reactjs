@@ -13,15 +13,17 @@ import {
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { dialogTypes } from "../Dialog";
-import { toggleModal } from "../../redux/actions/common";
+import { toggleModal, toggleTheme } from "../../redux/actions/common";
 import { userLogout } from "../../redux/actions/auth";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { useMemo } from "react";
 
-export default function Header() {
+export default function Header({ playAnimation }) {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const { user = null } = useSelector((state) => state.auth);
+	const { appTheme = "light" } = useSelector((state) => state.common);
 
 	const handleLoginClick = () => {
 		dispatch(toggleModal({ modal: dialogTypes.login }));
@@ -34,6 +36,13 @@ export default function Header() {
 	const handleLogoutClick = () => {
 		dispatch(userLogout());
 		navigate("/");
+	};
+
+	const handleToggleTheme = () => {
+		playAnimation();
+		setTimeout(() => {
+			dispatch(toggleTheme());
+		}, 1000);
 	};
 
 	return (
@@ -55,9 +64,14 @@ export default function Header() {
 				</Link>
 			</Box>
 			<Box className="user-icon">
+				<img
+					onClick={handleToggleTheme}
+					width="30px"
+					src={appTheme === "light" ? "/images/moon.png" : "/images/sun.png"}
+				/>
 				{user ? (
 					location.pathname !== "/profile" ? (
-						<Menu>
+						<Menu ml={3}>
 							<MenuButton>
 								<Avatar
 									onClick={handleProfileClick}
@@ -78,7 +92,7 @@ export default function Header() {
 						""
 					)
 				) : (
-					<Button colorScheme="purple" onClick={handleLoginClick}>
+					<Button ml={3} colorScheme="purple" onClick={handleLoginClick}>
 						Login
 					</Button>
 				)}

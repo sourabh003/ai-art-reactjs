@@ -16,4 +16,10 @@ body::-webkit-scrollbar-thumb {
 	border: 2px solid gray; /* creates padding around scroll thumb */
 }
 
+.custom-animation{
+    transform: rotate(180deg);
+    position: absolute;
+    width: 100%;
+}
+
 

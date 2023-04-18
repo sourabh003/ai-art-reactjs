@@ -1,6 +1,7 @@
-import { TOGGLE_MODAL } from "../actions/common";
+import { TOGGLE_MODAL, TOGGLE_THEME } from "../actions/common";
 
 const initialState = {
+	appTheme: "dark",
 	isModalOpen: false,
 	modal: "",
 	modalData: null,
@@ -19,6 +20,9 @@ export default (state = initialState, action) => {
 				isModalOpen: !isModalOpen,
 			};
 			return { ...state, ...modalState };
+
+		case TOGGLE_THEME:
+			return { ...state, appTheme: state.appTheme === "light" ? "dark" : "light" };
 
 		default:
 			return { ...state };

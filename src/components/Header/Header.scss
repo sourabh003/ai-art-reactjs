@@ -22,7 +22,7 @@
 	.user-icon {
 		cursor: pointer;
 		display: flex;
-		align-items: baseline;
+		align-items: center;
 		justify-content: baseline;
 		span {
             div {
@@ -56,4 +56,11 @@
 }
 
 @media only screen and (max-device-width: 768px) {
+}
+
+
+.dark-mode{
+    .custom-header{
+        background-color: black !important;
+    }
 }

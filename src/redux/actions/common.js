@@ -8,3 +8,13 @@ export const toggleModal = (data = {}) => {
 		});
 	};
 };
+
+export const TOGGLE_THEME = "TOGGLE_THEME";
+
+export const toggleTheme = () => {
+	return (dispatch) => {
+		dispatch({
+			type: TOGGLE_THEME,
+		});
+	};
+};

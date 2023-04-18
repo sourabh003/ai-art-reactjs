@@ -63,7 +63,7 @@ export default function PostCard({ allowImageEdit = false, image }) {
 			<Box className="post-details">
 				<Text fontSize="lg">{capitalize(prompt)}</Text>
 				<Box className="post-actions">
-					<Button leftIcon={<AtSignIcon />} disabled colorScheme="gray">
+					<Button leftIcon={<AtSignIcon />} disabled>
 						By {name}
 					</Button>
 					<IconButton colorScheme="teal" onClick={onDownloadClick}>
