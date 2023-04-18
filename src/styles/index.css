@@ -15,3 +15,11 @@ body::-webkit-scrollbar-thumb {
 	background-color: gray; /* color of the scroll thumb */
 	border: 2px solid gray; /* creates padding around scroll thumb */
 }
+
+.custom-animation{
+    transform: rotate(180deg);
+    position: absolute;
+    width: 100%;
+}
+
+

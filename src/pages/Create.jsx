@@ -5,19 +5,19 @@ import {
 	Input,
 	Text,
 	CircularProgress,
-	useToast,
 	VStack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../styles/create.scss";
 import { getRandomPrompt } from "../utils/methods";
 import { generateValidator } from "../validators/imageValidators";
-import imageService from "../services/image.service";
 import { Switch } from "@chakra-ui/react";
-import { Badge } from "@chakra-ui/react";
+import toast from "react-hot-toast";
+import imageService from "../redux/services/image.service";
+import { useSelector } from "react-redux";
 
 export default function Create() {
-	const toast = useToast();
+	const { user } = useSelector((state) => state.auth);
 
 	const [formValues, setFormValues] = useState({
 		name: "",
@@ -38,34 +38,19 @@ export default function Create() {
 		const values = { ...formValues };
 		const { isValid } = generateValidator(values);
 		if (!isValid) {
-			toast({
-				title: "Fields Empty!",
-				status: "error",
-				duration: 2000,
-				isClosable: true,
-			});
+			toast.error("Fields Empty!");
 			return setIsLoading(false);
 		}
 		imageService
 			.generate({ ...formValues })
 			.then((res) => {
 				const { success, message, data } = res;
-				toast({
-					title: message,
-					status: success ? "success" : "error",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast[success ? "success" : "error"](message);
 				if (!success) return;
 				setGeneratedImage(data);
 			})
 			.catch((error) => {
-				toast({
-					title: error.message,
-					status: "error",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast.error(error.message);
 			})
 			.finally(() => {
 				setIsLoading(false);
@@ -76,6 +61,15 @@ export default function Create() {
 		const randomThought = getRandomPrompt();
 		setFormValues((prevState) => ({ ...prevState, prompt: randomThought }));
 	};
+
+	useEffect(() => {
+		if (!user) return;
+		setFormValues((prevState) => ({
+			...prevState,
+			name: user?.name,
+			email: user?.email,
+		}));
+	}, [user]);
 
 	return (
 		<Box className="create-page">
@@ -97,6 +91,7 @@ export default function Create() {
 						Your Name
 					</Text>
 					<Input
+						disabled={!!user}
 						width={"100%"}
 						className="search-input"
 						onChange={handleChange}
@@ -110,6 +105,7 @@ export default function Create() {
 						Your Email
 					</Text>
 					<Input
+						disabled={!!user}
 						width={"100%"}
 						className="search-input"
 						type="email"
@@ -163,7 +159,6 @@ export default function Create() {
 
 const RenderImage = ({ isLoading = false, image = null }) => {
 	const [loader, setLoader] = useState(false);
-	const toast = useToast();
 
 	const handleVisibilityChange = (e) => {
 		const { checked } = e.target;
@@ -173,20 +168,10 @@ const RenderImage = ({ isLoading = false, image = null }) => {
 				isPrivate: checked,
 			})
 			.then(() => {
-				toast({
-					title: "Image visibility updated",
-					status: "success",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast.success("Image visibility updated");
 			})
 			.catch((err) => {
-				toast({
-					title: err.message,
-					status: "error",
-					duration: 2000,
-					isClosable: true,
-				});
+				toast.error(err.message);
 			})
 			.finally(() => {
 				setLoader(false);
