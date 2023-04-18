@@ -4,8 +4,8 @@ class ImageService {
     generate(data) {
         return apiPost(generateURL("/images/generate"), data);
     }
-	getAllImages(data) {
-		return apiGet(generateURL("/images"), data);
+	getAllImages() {
+		return apiGet(generateURL("/images"), {});
     }
     getUserImages(data) {
 		return apiPost(generateURL("/images/user"), data);
