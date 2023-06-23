@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import { setUser } from "./redux/actions/auth";
 import { Box } from "@chakra-ui/react";
 import Lottie from "react-lottie-player";
+import Head from "./components/Head";
 
 const App = () => {
 	const { appTheme } = useSelector((state) => state.common);
@@ -36,7 +37,7 @@ const App = () => {
 	}, [appTheme]);
 
 	return (
-		<BrowserRouter>
+        <BrowserRouter>
 			{animationData && (
 				<Box className="custom-animation">
 					<Lottie
@@ -47,7 +48,8 @@ const App = () => {
 					/>
 				</Box>
 			)}
-			<Toaster position="top-center" reverseOrder={false} />
+            <Toaster position="top-center" reverseOrder={false} />
+            <Head />
 			<Dialog />
 			<Header playAnimation={playAnimation} />
 			<CustomRoutes />
