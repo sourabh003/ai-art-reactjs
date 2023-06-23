@@ -1,8 +1,9 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 
 export default function Head() {
 	return (
-		<head>
+		<Helmet>
 			<meta
 				property="og:url"
 				content="https://ai-art-reactjs.vercel.app"
@@ -16,6 +17,6 @@ export default function Head() {
 				property="og:image"
 				content="https://ai-art-reactjs.vercel.app/images/dummy-image.jpg"
 			/>
-		</head>
+		</Helmet>
 	);
 }
