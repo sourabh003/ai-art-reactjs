@@ -71,15 +71,17 @@ export default function Home() {
 				</Text>
 			</Box>
 
-			<InputGroup mt={5}>
-				<InputLeftElement children={<Search2Icon color="gray.300" />} />
-				<Input
-					className="search-input"
-					placeholder="Search here..."
-					onChange={handleChange}
-					value={searchText}
-				/>
-			</InputGroup>
+			{!isLoading && (
+				<InputGroup mt={5}>
+					<InputLeftElement children={<Search2Icon color="gray.300" />} />
+					<Input
+						className="search-input"
+						placeholder="Search here..."
+						onChange={handleChange}
+						value={searchText}
+					/>
+				</InputGroup>
+			)}
 
 			<RenderImagesList isLoading={isLoading} images={imagesList} />
 			{/* <IconButton
