@@ -21,17 +21,16 @@ export default function RenderImagesList({
 			</Box>
 		);
 
-	if (images.length === 0)
-		return (
-			<Box className="no-images-view">
-				<img src="/images/no-images.png" alt="no images" />
-				<Text fontSize="md" color="gray" as="b">
-					No Images Found
-				</Text>
-			</Box>
-		);
 	return (
 		<Box className="images-list">
+			{images.length === 0 && (
+				<Box className="no-images-view">
+					<img src="/images/no-images.png" alt="no images" />
+					<Text fontSize="md" color="gray" as="b">
+						No Images Found
+					</Text>
+				</Box>
+			)}
 			<Box className="images-grid">
 				{images.map((image) => {
 					return (
