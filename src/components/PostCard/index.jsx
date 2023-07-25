@@ -22,19 +22,6 @@ export default function PostCard({ allowImageEdit = false, image }) {
 	const [checked, setChecked] = useState(isPrivate);
 	const [loading, setLoading] = useState(false);
 
-	const onDownloadClick = async () => {
-		const image = await fetch(url);
-		const imageBlog = await image.blob();
-		const imageURL = URL.createObjectURL(imageBlog);
-
-		const link = document.createElement("a");
-		link.href = imageURL;
-		link.download = "ai-generated-art";
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
-	};
-
 	const handleVisibilityChange = () => {
 		setLoading(true);
 		setTimeout(() => {
@@ -66,9 +53,6 @@ export default function PostCard({ allowImageEdit = false, image }) {
 					<Button leftIcon={<AtSignIcon />} disabled>
 						By {name}
 					</Button>
-					<IconButton colorScheme="teal" onClick={onDownloadClick}>
-						<DownloadIcon />
-					</IconButton>
 				</Box>
 
 				{allowImageEdit && (
